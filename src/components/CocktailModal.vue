@@ -30,7 +30,7 @@
 <template>
   <Transition name="modal">
     <div
-      class="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black"
+      class="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black bg-black/80"
       @click="$emit('close')"
     >
       <div class="absolute inset-0" @click="$emit('close')"></div>
@@ -42,14 +42,16 @@
       >
         <button
           @click="$emit('close')"
-          class="absolute top-4 right-4 z-10 p-2 rounded-full bg-white bg-opacity-80 dark:bg-gray-700 hover:bg-opacity-100 transition-all shadow-md"
+          class="group absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 dark:bg-gray-700 hover:bg-white transition-all shadow-md"
         >
-          <XIcon class="h-5 w-5 text-gray-700 dark:text-white" />
+          <XIcon
+            class="h-5 w-5 text-gray-700 dark:text-white group-hover:text-gray-700"
+          />
         </button>
 
         <button
           @click="$emit('toggle-favorite', cocktail)"
-          class="absolute top-4 right-16 z-10 p-2 rounded-full bg-white bg-opacity-80 dark:bg-gray-700 hover:bg-opacity-100 transition-all shadow-md"
+          class="absolute top-4 right-16 z-10 p-2 rounded-full bg-white/80 dark:bg-gray-700 hover:bg-white transition-all shadow-md"
         >
           <HeartIcon
             :class="[
@@ -73,19 +75,19 @@
               <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
                 <div class="flex flex-wrap gap-2 mb-2">
                   <span
-                    class="px-2 py-1 text-xs font-medium rounded-full bg-amber-500 bg-opacity-90 text-white"
+                    class="px-2 py-1 text-xs font-medium rounded-full bg-amber-500/90 text-white"
                   >
                     {{ cocktail.strCategory || "Uncategorized" }}
                   </span>
                   <span
                     v-if="cocktail.strAlcoholic"
-                    class="px-2 py-1 text-xs font-medium rounded-full bg-blue-500 bg-opacity-90 text-white"
+                    class="px-2 py-1 text-xs font-medium rounded-full bg-blue-500/90 text-white"
                   >
                     {{ cocktail.strAlcoholic }}
                   </span>
                   <span
                     v-if="cocktail.strGlass"
-                    class="px-2 py-1 text-xs font-medium rounded-full bg-green-500 bg-opacity-90 text-white"
+                    class="px-2 py-1 text-xs font-medium rounded-full bg-green-500/90 text-white"
                   >
                     {{ cocktail.strGlass }}
                   </span>
