@@ -2,7 +2,9 @@
   <div
     class="fixed inset-0 flex items-center justify-center z-50 bg-gradient-to-br from-amber-400 to-amber-600 dark:from-gray-900 dark:to-amber-900"
   >
+    <!-- Conteneur centré pour le contenu de démarrage -->
     <div class="text-center" ref="splashContent">
+      <!-- Animation du verre à cocktail et bulles -->
       <div class="relative mb-6 w-32 h-32 mx-auto">
         <div class="absolute inset-0 flex items-center justify-center">
           <div class="cocktail-glass">
@@ -10,6 +12,7 @@
             <div class="glass-stem"></div>
             <div class="glass-base rotate-180"></div>
             <div class="liquid"></div>
+            <!-- Bulles animées dans le verre -->
             <div class="bubble bubble-1"></div>
             <div class="bubble bubble-2"></div>
             <div class="bubble bubble-3"></div>
@@ -19,11 +22,13 @@
         </div>
       </div>
 
+      <!-- Titre de l'app et slogan -->
       <h1 class="text-4xl font-bold text-white mb-2 tracking-tight">
         Mix & Drink
       </h1>
       <p class="text-amber-100 dark:text-amber-200">Discover. Mix. Enjoy.</p>
 
+      <!-- Barre de chargement animée -->
       <div class="mt-12">
         <div class="loading-bar">
           <div class="loading-progress" ref="loadingBar"></div>
@@ -34,6 +39,7 @@
 </template>
 
 <script setup>
+// Références aux éléments DOM et émission d'événement de fin
 import { ref, onMounted } from "vue";
 import gsap from "gsap";
 
@@ -42,14 +48,17 @@ const loadingBar = ref(null);
 const emit = defineEmits(["complete"]);
 
 onMounted(() => {
+  // Apparition du contenu (fade-in avec translation)
   gsap.fromTo(
     splashContent.value,
     { y: 30, opacity: 0 },
     { y: 0, opacity: 1, duration: 0.8, ease: "power1.out" }
   );
 
+  // Timeline pour la progression puis disparition
   const loadingTl = gsap.timeline({
     onComplete: () => {
+      // Disparition du contenu et déclenchement de l'événement
       gsap.to(splashContent.value, {
         y: -30,
         opacity: 0,
@@ -60,6 +69,7 @@ onMounted(() => {
     },
   });
 
+  // Animation de la barre de chargement sur 2 secondes
   loadingTl.to(loadingBar.value, {
     width: "100%",
     duration: 2,
@@ -69,6 +79,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* Style de la barre de chargement */
 .loading-bar {
   width: 200px;
   height: 4px;
@@ -85,7 +96,7 @@ onMounted(() => {
   border-radius: 2px;
 }
 
-/* Cocktail Glass Animation */
+/* Animations du verre et des bulles */
 .cocktail-glass {
   position: relative;
   width: 80px;
@@ -107,7 +118,7 @@ onMounted(() => {
   top: 60px;
   left: 25px;
   width: 10px;
-  height: 25px;
+  height: 35px;
   background-color: rgba(255, 255, 255, 0.8);
 }
 
@@ -195,6 +206,7 @@ onMounted(() => {
   transform: translateY(-50%);
 }
 
+/* Keyframes pour le mouvement des bulles et du liquide */
 @keyframes wave {
   0%,
   100% {

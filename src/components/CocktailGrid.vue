@@ -1,17 +1,21 @@
 <template>
+  <!-- Conteneur grille responsive : 1 à 3 colonnes selon la taille d'écran -->
   <div
     ref="gridContainer"
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
   >
+    <!-- Carte pour chaque cocktail avec animation d'apparition -->
     <div
       v-for="(cocktail, index) in cocktails"
       :key="cocktail.idDrink"
       class="relative group"
       :class="animationClasses[index]"
     >
+      <!-- Carte avec scale au survol -->
       <div
         class="h-full bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 group-hover:scale-[1.02] group-hover:shadow-xl"
       >
+        <!-- Image du cocktail avec effet zoom et overlay au survol -->
         <div class="relative h-56 md:h-64 overflow-hidden">
           <div
             class="absolute inset-0 bg-gradient-to-t from-amber-500/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-10"
@@ -22,6 +26,7 @@
             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             loading="lazy"
           />
+          <!-- Bouton favoris en haut à droite -->
           <div class="absolute top-3 right-3 z-20">
             <button
               @click.stop="$emit('toggle-favorite', cocktail)"
@@ -39,13 +44,16 @@
           </div>
         </div>
 
+        <!-- Corps de la carte : titre, catégories, extrait instructions et bouton détail -->
         <div class="p-4 md:p-5">
+          <!-- Nom du cocktail, tronqué sur une ligne -->
           <h3
             class="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-1"
           >
             {{ cocktail.strDrink }}
           </h3>
 
+          <!-- Catégorie et alcoolisé -->
           <div class="flex flex-wrap gap-2 mb-3">
             <span
               class="px-2 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-800 dark:bg-amber-900 dark:bg-opacity-50 dark:text-amber-200"
@@ -60,12 +68,14 @@
             </span>
           </div>
 
+          <!-- Extrait des instructions sur 3 lignes max -->
           <div class="h-16 overflow-hidden">
             <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
               {{ cocktail.strInstructions }}
             </p>
           </div>
 
+          <!-- Bouton pour voir la recette complète -->
           <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
             <button
               @click="$emit('view-details', cocktail)"
@@ -82,10 +92,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+// Import des refs et animations GSAP
+import { ref, onMounted } from "vue";
 import { HeartIcon, ChevronRightIcon } from "lucide-vue-next";
 import gsap from "gsap";
 
+// Props : liste de cocktails et favoris pour état du cœur
 const props = defineProps({
   cocktails: {
     type: Array,
@@ -100,12 +112,15 @@ const props = defineProps({
 defineEmits(["view-details", "toggle-favorite"]);
 
 const gridContainer = ref(null);
+// Classes pour décalage des animations en cascade
 const animationClasses = ref(["fade-in-up-1", "fade-in-up-2", "fade-in-up-3"]);
 
+// Vérifie si un cocktail est en favoris
 const isFavorite = (cocktail) => {
   return props.favorites.some((fav) => fav.idDrink === cocktail.idDrink);
 };
 
+// Animation d'apparition des cartes au montage
 onMounted(() => {
   if (gridContainer.value) {
     const cards = gridContainer.value.querySelectorAll(".group");
@@ -126,6 +141,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* Classes pour retarder l'animation fadeInUp */
 .fade-in-up-1 {
   --animation-delay: 0ms;
 }
@@ -138,6 +154,7 @@ onMounted(() => {
   --animation-delay: 400ms;
 }
 
+/* Animation keyframes et application aux groupes */
 @keyframes fadeInUp {
   from {
     opacity: 0;

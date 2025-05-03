@@ -1,4 +1,5 @@
 <style scoped>
+/* Transitions d'ouverture et fermeture */
 .modal-enter-active,
 .modal-leave-active {
   transition: opacity 0.3s ease;
@@ -9,6 +10,7 @@
   opacity: 0;
 }
 
+/* Personnalisation du scrollbar dans la modal */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -29,17 +31,21 @@
 
 <template>
   <Transition name="modal">
+    <!-- Fond sombre cliquable pour fermer la modal -->
     <div
       class="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black bg-black/80"
       @click="$emit('close')"
     >
+      <!-- Zone invisible pour fermer au clic hors du contenu -->
       <div class="absolute inset-0" @click="$emit('close')"></div>
 
+      <!-- Conteneur principal centré, empêche la propagation du clic -->
       <div
         class="relative max-w-4xl w-full max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl"
         @click.stop
         ref="modalContent"
       >
+        <!-- Bouton fermer en haut à droite -->
         <button
           @click="$emit('close')"
           class="group absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 dark:bg-gray-700 hover:bg-white transition-all shadow-md"
@@ -49,6 +55,7 @@
           />
         </button>
 
+        <!-- Bouton favoris à côté du close -->
         <button
           @click="$emit('toggle-favorite', cocktail)"
           class="absolute top-4 right-16 z-10 p-2 rounded-full bg-white/80 dark:bg-gray-700 hover:bg-white transition-all shadow-md"
@@ -62,6 +69,7 @@
         </button>
 
         <div class="md:flex">
+          <!-- Section image et étiquettes -->
           <div class="md:w-2/5 relative">
             <div class="h-64 md:h-full min-h-[300px] overflow-hidden">
               <img
@@ -72,6 +80,7 @@
               <div
                 class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
               ></div>
+              <!-- Étiquettes catégorie, alcoolisé, type de verre -->
               <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
                 <div class="flex flex-wrap gap-2 mb-2">
                   <span
@@ -96,10 +105,13 @@
             </div>
           </div>
 
+          <!-- Section détails, ingrédients et instructions -->
           <div class="md:w-3/5 p-6 relative" ref="contentSection">
+            <!-- Titre du cocktail -->
             <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">
               {{ cocktail.strDrink }}
             </h2>
+            <!-- Affichage des tags s'ils existent -->
             <p
               v-if="cocktail.strTags"
               class="text-sm text-gray-500 dark:text-gray-400 mb-4"
@@ -107,6 +119,7 @@
               {{ formatTags(cocktail.strTags) }}
             </p>
 
+            <!-- Liste des ingrédients dynamiquement générée -->
             <div class="mb-6">
               <h3
                 class="text-lg font-semibold mb-2 text-amber-600 dark:text-amber-400"
@@ -119,6 +132,7 @@
                   :key="index"
                   class="flex items-start p-2 rounded-md bg-amber-50 dark:bg-gray-700"
                 >
+                  <!-- Image de l'ingrédient -->
                   <div
                     class="h-8 w-8 rounded-md overflow-hidden flex-shrink-0 bg-white"
                   >
@@ -128,6 +142,7 @@
                       class="h-full w-full object-cover"
                     />
                   </div>
+                  <!-- Nom et mesure -->
                   <div class="ml-3">
                     <span class="font-medium text-gray-900 dark:text-white">
                       {{ ingredient.name }}
@@ -143,6 +158,7 @@
               </ul>
             </div>
 
+            <!-- Instructions de préparation -->
             <div class="mb-6">
               <h3
                 class="text-lg font-semibold mb-2 text-amber-600 dark:text-amber-400"
@@ -156,6 +172,7 @@
               </div>
             </div>
 
+            <!-- Lien vers le tutoriel vidéo si disponible -->
             <div v-if="cocktail.strVideo" class="mb-6">
               <h3
                 class="text-lg font-semibold mb-2 text-amber-600 dark:text-amber-400"
@@ -179,10 +196,12 @@
 </template>
 
 <script setup>
+// Hooks Vue et GSAP pour animations d'entrée
 import { ref, computed, onMounted, nextTick } from "vue";
 import { XIcon, HeartIcon, ExternalLinkIcon } from "lucide-vue-next";
 import gsap from "gsap";
 
+// Propriétés passées depuis le parent
 const props = defineProps({
   cocktail: {
     type: Object,
@@ -194,8 +213,10 @@ const props = defineProps({
   },
 });
 
+// Événements émis : fermeture et basculement favori
 defineEmits(["close", "toggle-favorite"]);
 
+// Animation d'apparition de la modal et des ingrédients
 onMounted(() => {
   nextTick(() => {
     if (modalContent.value) {
@@ -224,12 +245,13 @@ onMounted(() => {
   });
 });
 
+// Références DOM pour animation
 const modalContent = ref(null);
 const contentSection = ref(null);
 
+// Construction de la liste d'ingrédients depuis les clés dynamiques
 const ingredients = computed(() => {
   const result = [];
-
   for (let i = 1; i <= 15; i++) {
     const ingredientKey = `strIngredient${i}`;
     const measureKey = `strMeasure${i}`;
@@ -245,6 +267,7 @@ const ingredients = computed(() => {
   return result;
 });
 
+// Formatage des tags en hashtags
 const formatTags = (tags) => {
   if (!tags) return "";
   return tags
@@ -253,6 +276,7 @@ const formatTags = (tags) => {
     .join(" ");
 };
 
+// URL de l'image d'ingrédient depuis l'API
 const getIngredientImage = (name) => {
   if (!name) return "";
   return `https://www.thecocktaildb.com/images/ingredients/${encodeURIComponent(

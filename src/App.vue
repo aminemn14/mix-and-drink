@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Affiche l'écran de démarrage tant que showSplash est true -->
     <SplashScreen v-if="showSplash" @complete="onSplashComplete" />
 
     <div
@@ -11,6 +12,7 @@
           : 'bg-gradient-to-br from-amber-50 to-orange-100 text-gray-800'
       "
     >
+      <!-- En-tête avec navigation et contrôle du thème, recherche et favoris -->
       <header class="py-6 px-4 sm:px-6 relative z-10">
         <nav class="max-w-7xl mx-auto flex justify-between items-center">
           <div class="header-logo flex items-center space-x-2" @click="goHome">
@@ -31,12 +33,14 @@
           </div>
 
           <div class="flex items-center space-x-4">
+            <!-- Boutons Home, Favoris, Recherche, Thème -->
             <button
               @click="goHome"
               class="p-2 rounded-full hover:bg-opacity-10 hover:bg-white hover:text-gray-900 dark:hover:text-gray-900 transition-colors duration-300"
             >
               <HomeIcon class="h-6 w-6" />
             </button>
+            <!-- Indicateur de nombre de favoris -->
             <button
               @click="toggleFavorites"
               class="p-2 rounded-full hover:bg-opacity-10 hover:bg-white hover:text-gray-900 dark:hover:text-gray-900 transition-colors duration-300 relative"
@@ -61,6 +65,7 @@
               @click="toggleTheme"
               class="p-2 rounded-full hover:bg-opacity-10 hover:bg-white hover:text-gray-900 dark:hover:text-gray-900 transition-colors duration-300"
             >
+              <!-- Alterne entre sun and moon -->
               <SunIcon v-if="theme === 'dark'" class="h-6 w-6" />
               <MoonIcon v-else class="h-6 w-6" />
             </button>
@@ -70,6 +75,7 @@
 
       <main class="relative z-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+          <!-- État chargement -->
           <div
             v-if="loading"
             class="flex flex-col items-center justify-center h-64"
@@ -81,6 +87,7 @@
             <p class="mt-6 animate-pulse">Mixing cocktails...</p>
           </div>
 
+          <!-- Affiche une erreur si besoin -->
           <template v-else-if="error">
             <div
               class="p-6 bg-red-100 rounded-lg shadow-lg max-w-2xl mx-auto text-center"
@@ -98,7 +105,9 @@
             </div>
           </template>
 
+          <!-- Contenu principal selon le mode (recherche, favoris ou aléatoire) -->
           <template v-else>
+            <!-- Champ de recherche -->
             <div v-if="searchMode" class="mb-10 max-w-xl mx-auto">
               <div class="relative">
                 <input
@@ -117,6 +126,7 @@
               </div>
             </div>
 
+            <!-- Affiche les cocktails favoris -->
             <div v-if="showFavorites && favorites.length > 0">
               <h2 class="text-xl font-bold mb-6 flex items-center">
                 <HeartIcon class="h-5 w-5 text-amber-500 mr-2" />
@@ -156,6 +166,7 @@
               </div>
             </div>
 
+            <!-- Résultats de recherche -->
             <div v-else-if="searchMode && searchResults.length > 0">
               <h2 class="text-xl font-bold mb-6 flex items-center">
                 <SearchIcon class="h-5 w-5 text-amber-500 mr-2" />
@@ -186,6 +197,7 @@
               </div>
             </div>
 
+            <!-- Affiche cocktails aléatoires -->
             <div v-else>
               <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-bold flex items-center">
@@ -211,6 +223,7 @@
         </div>
       </main>
 
+      <!-- Modal de détails du cocktail -->
       <CocktailModal
         v-if="selectedCocktail"
         :cocktail="selectedCocktail"
@@ -223,6 +236,7 @@
 </template>
 
 <script setup>
+// Import des hooks et composants
 import { ref, onMounted, watch, nextTick } from "vue";
 import {
   HomeIcon,
@@ -240,6 +254,7 @@ import debounce from "lodash/debounce";
 
 const MIN_LOADING = 1000;
 
+// Variables réactives principales
 const showSplash = ref(true);
 const cocktails = ref([]);
 const loading = ref(true);
@@ -252,10 +267,9 @@ const searchMode = ref(false);
 const searchQuery = ref("");
 const searchResults = ref([]);
 
-const splashContent = ref(null);
-const loadingBar = ref(null);
 const searchInput = ref(null);
 
+// Fonction utilitaire pour délai minimal
 function withMinDelay(promise) {
   return Promise.all([
     promise,
@@ -267,6 +281,7 @@ function onSplashComplete() {
   showSplash.value = false;
 }
 
+// Recherche différée : lance la requête 300 ms après la dernière frappe
 const debouncedSearch = debounce(async (q) => {
   if (!q.trim()) {
     searchResults.value = [];
@@ -304,6 +319,7 @@ watch(
   { deep: true }
 );
 
+// Récupération de cocktails aléatoires
 async function fetchCocktails() {
   loading.value = true;
   error.value = null;
@@ -328,6 +344,8 @@ async function fetchCocktails() {
 }
 
 const showDetails = (c) => (selectedCocktail.value = c);
+
+// Gestion du thème et stockage
 const toggleTheme = () => {
   theme.value = theme.value === "light" ? "dark" : "light";
   document.documentElement.classList.toggle("dark", theme.value === "dark");
@@ -360,6 +378,7 @@ const goHome = () => {
   fetchCocktails();
 };
 
+// Initialisation au montage
 onMounted(() => {
   fetchCocktails();
   if (theme.value === "dark") document.documentElement.classList.add("dark");
@@ -367,6 +386,7 @@ onMounted(() => {
 </script>
 
 <style>
+/* Animations et styles globaux essentiels */
 @keyframes shake {
   0%,
   100% {
