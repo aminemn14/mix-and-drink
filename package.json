@@ -8,7 +8,11 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:app": "vitest tests/App.spec.js",
+    "test:grid": "vitest tests/components/CocktailGrid.spec.js",
+    "test:modal": "vitest tests/components/CocktailModal.spec.js",
+    "test:splash": "vitest tests/components/SplashScreen.spec.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.5",
