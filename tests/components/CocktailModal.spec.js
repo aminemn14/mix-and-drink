@@ -49,7 +49,7 @@ describe("CocktailModal.vue", () => {
   });
 
   it("formats and displays tags", () => {
-    const tagElement = wrapper.find("p.text-gray-500");
+    const tagElement = wrapper.find("p.text-gray-400");
     expect(tagElement.exists()).toBe(true);
     expect(tagElement.text()).toBe("#tag1 #tag2");
   });
@@ -72,9 +72,9 @@ describe("CocktailModal.vue", () => {
   });
 
   it("renders instructions", () => {
-    expect(wrapper.find("div.prose p").text()).toBe(
-      baseCocktail.strInstructions
-    );
+    const instructions = wrapper.find("div.prose-invert p");
+    expect(instructions.exists()).toBe(true);
+    expect(instructions.text()).toBe(baseCocktail.strInstructions);
   });
 
   it("emits close when backdrop or close button is clicked", async () => {
