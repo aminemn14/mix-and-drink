@@ -20,7 +20,6 @@ describe("CocktailModal.vue", () => {
     strGlass: "Highball glass",
     strTags: "tag1,tag2",
     strInstructions: "Step 1. Step 2.",
-    strVideo: "https://youtube.com/test",
     strIngredient1: "Gin",
     strMeasure1: "50 ml",
     strIngredient2: "Tonic Water",
@@ -76,13 +75,6 @@ describe("CocktailModal.vue", () => {
     expect(wrapper.find("div.prose p").text()).toBe(
       baseCocktail.strInstructions
     );
-  });
-
-  it("renders video tutorial link when strVideo is present", () => {
-    const link = wrapper.find("a");
-    expect(link.exists()).toBe(true);
-    expect(link.attributes("href")).toBe(baseCocktail.strVideo);
-    expect(link.text()).toContain("Watch on YouTube");
   });
 
   it("emits close when backdrop or close button is clicked", async () => {

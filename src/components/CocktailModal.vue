@@ -162,21 +162,6 @@
                 </p>
               </div>
             </div>
-
-            <!-- Lien vers le tutoriel vidéo si disponible -->
-            <div v-if="cocktail.strVideo" class="mb-6">
-              <h3 class="text-lg font-semibold mb-2 text-amber-400">
-                Video Tutorial
-              </h3>
-              <a
-                :href="cocktail.strVideo"
-                target="_blank"
-                class="inline-flex items-center px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition-colors"
-              >
-                <span class="mr-2">Watch on YouTube</span>
-                <ExternalLinkIcon class="h-4 w-4" />
-              </a>
-            </div>
           </div>
         </div>
       </div>
