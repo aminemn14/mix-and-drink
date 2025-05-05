@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed inset-0 flex items-center justify-center z-50 bg-gradient-to-br from-amber-400 to-amber-600 dark:from-gray-900 dark:to-amber-900"
+    class="fixed inset-0 flex items-center justify-center z-50 bg-gradient-to-br from-gray-900 to-amber-900"
   >
     <!-- Conteneur centré pour le contenu de démarrage -->
     <div class="text-center" ref="splashContent">
@@ -26,7 +26,7 @@
       <h1 class="text-4xl font-bold text-white mb-2 tracking-tight">
         Mix & Drink
       </h1>
-      <p class="text-amber-100 dark:text-amber-200">Discover. Mix. Enjoy.</p>
+      <p class="text-amber-200">Discover. Mix. Enjoy.</p>
 
       <!-- Barre de chargement animée -->
       <div class="mt-12">

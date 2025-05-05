@@ -41,28 +41,26 @@
 
       <!-- Conteneur principal centré, empêche la propagation du clic -->
       <div
-        class="relative max-w-4xl w-full max-h-[90vh] overflow-y-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl"
+        class="relative max-w-4xl w-full max-h-[90vh] overflow-y-auto bg-gray-800 rounded-lg shadow-xl"
         @click.stop
         ref="modalContent"
       >
         <!-- Bouton fermer en haut à droite -->
         <button
           @click="$emit('close')"
-          class="group absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 dark:bg-gray-700 hover:bg-white transition-all shadow-md"
+          class="group absolute top-4 right-4 z-10 p-2 rounded-full bg-gray-700 hover:bg-white transition-all shadow-md"
         >
-          <XIcon
-            class="h-5 w-5 text-gray-700 dark:text-white group-hover:text-gray-700"
-          />
+          <XIcon class="h-5 w-5 text-gray-400 group-hover:text-gray-700" />
         </button>
 
         <!-- Bouton favoris à côté du close -->
         <button
           @click="$emit('toggle-favorite', cocktail)"
-          class="absolute top-4 right-16 z-10 p-2 rounded-full bg-white/80 dark:bg-gray-700 hover:bg-white transition-all shadow-md"
+          class="absolute top-4 right-16 z-10 p-2 rounded-full bg-gray-700 hover:bg-white transition-all shadow-md"
         >
           <HeartIcon
             :class="[
-              isFavorite ? 'text-red-500 fill-red-500' : 'text-gray-500',
+              isFavorite ? 'text-red-500 fill-red-500' : 'text-gray-400',
               'h-5 w-5',
             ]"
           />
@@ -108,29 +106,24 @@
           <!-- Section détails, ingrédients et instructions -->
           <div class="md:w-3/5 p-6 relative" ref="contentSection">
             <!-- Titre du cocktail -->
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-1">
+            <h2 class="text-2xl font-bold text-white mb-1">
               {{ cocktail.strDrink }}
             </h2>
             <!-- Affichage des tags s'ils existent -->
-            <p
-              v-if="cocktail.strTags"
-              class="text-sm text-gray-500 dark:text-gray-400 mb-4"
-            >
+            <p v-if="cocktail.strTags" class="text-sm text-gray-400 mb-4">
               {{ formatTags(cocktail.strTags) }}
             </p>
 
             <!-- Liste des ingrédients dynamiquement générée -->
             <div class="mb-6">
-              <h3
-                class="text-lg font-semibold mb-2 text-amber-600 dark:text-amber-400"
-              >
+              <h3 class="text-lg font-semibold mb-2 text-amber-400">
                 Ingredients
               </h3>
               <ul class="space-y-2">
                 <li
                   v-for="(ingredient, index) in ingredients"
                   :key="index"
-                  class="flex items-start p-2 rounded-md bg-amber-50 dark:bg-gray-700"
+                  class="flex items-start p-2 rounded-md bg-gray-700"
                 >
                   <!-- Image de l'ingrédient -->
                   <div
@@ -144,12 +137,12 @@
                   </div>
                   <!-- Nom et mesure -->
                   <div class="ml-3">
-                    <span class="font-medium text-gray-900 dark:text-white">
+                    <span class="font-medium text-white">
                       {{ ingredient.name }}
                     </span>
                     <span
                       v-if="ingredient.measure"
-                      class="ml-2 text-sm text-gray-600 dark:text-gray-300"
+                      class="ml-2 text-sm text-gray-300"
                     >
                       {{ ingredient.measure }}
                     </span>
@@ -160,13 +153,11 @@
 
             <!-- Instructions de préparation -->
             <div class="mb-6">
-              <h3
-                class="text-lg font-semibold mb-2 text-amber-600 dark:text-amber-400"
-              >
+              <h3 class="text-lg font-semibold mb-2 text-amber-400">
                 Instructions
               </h3>
-              <div class="prose dark:prose-invert max-w-none">
-                <p class="text-gray-700 dark:text-gray-300">
+              <div class="prose-invert max-w-none">
+                <p class="text-gray-300">
                   {{ cocktail.strInstructions }}
                 </p>
               </div>
@@ -174,9 +165,7 @@
 
             <!-- Lien vers le tutoriel vidéo si disponible -->
             <div v-if="cocktail.strVideo" class="mb-6">
-              <h3
-                class="text-lg font-semibold mb-2 text-amber-600 dark:text-amber-400"
-              >
+              <h3 class="text-lg font-semibold mb-2 text-amber-400">
                 Video Tutorial
               </h3>
               <a

@@ -13,7 +13,7 @@
     >
       <!-- Carte avec scale au survol -->
       <div
-        class="h-full bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 group-hover:scale-[1.02] group-hover:shadow-xl"
+        class="h-full bg-gray-800 rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 group-hover:scale-[1.02] group-hover:shadow-xl"
       >
         <!-- Image du cocktail avec effet zoom et overlay au survol -->
         <div class="relative h-56 md:h-64 overflow-hidden">
@@ -30,7 +30,7 @@
           <div class="absolute top-3 right-3 z-20">
             <button
               @click.stop="$emit('toggle-favorite', cocktail)"
-              class="p-2 bg-white dark:bg-gray-800 rounded-full shadow-md hover:bg-amber-50 dark:hover:bg-gray-700 transition-colors"
+              class="p-2 bg-gray-800 rounded-full shadow-md hover:bg-gray-700 transition-colors"
             >
               <HeartIcon
                 :class="[
@@ -47,22 +47,20 @@
         <!-- Corps de la carte : titre, catégories, extrait instructions et bouton détail -->
         <div class="p-4 md:p-5">
           <!-- Nom du cocktail, tronqué sur une ligne -->
-          <h3
-            class="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-1"
-          >
+          <h3 class="text-lg font-bold text-white mb-2 line-clamp-1">
             {{ cocktail.strDrink }}
           </h3>
 
           <!-- Catégorie et alcoolisé -->
           <div class="flex flex-wrap gap-2 mb-3">
             <span
-              class="px-2 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-800 dark:bg-amber-900 dark:bg-opacity-50 dark:text-amber-200"
+              class="px-2 py-1 text-xs font-medium rounded-fullbg-amber-900/50 text-amber-200"
             >
               {{ cocktail.strCategory || "Uncategorized" }}
             </span>
             <span
               v-if="cocktail.strAlcoholic"
-              class="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:bg-opacity-50 dark:text-blue-200"
+              class="px-2 py-1 text-xs font-medium rounded-full bg-blue-900/50 text-blue-200"
             >
               {{ cocktail.strAlcoholic }}
             </span>
@@ -70,13 +68,13 @@
 
           <!-- Extrait des instructions sur 3 lignes max -->
           <div class="h-16 overflow-hidden">
-            <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
+            <p class="text-sm text-gray-300 line-clamp-3">
               {{ cocktail.strInstructions }}
             </p>
           </div>
 
           <!-- Bouton pour voir la recette complète -->
-          <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+          <div class="mt-4 pt-4 border-t border-gray-700">
             <button
               @click="$emit('view-details', cocktail)"
               class="w-full py-2 rounded-lg bg-amber-500 text-white font-medium hover:bg-amber-600 transition-colors flex items-center justify-center"
