@@ -72,7 +72,7 @@ L’application peut être conteneurisée avec Docker :
 1. **Construire l’image**
 
    ```bash
-   docker build -t mix-drink-app .
+   docker-compose up --build -d
    ```
 
 2. **Lancer le conteneur sur http://localhost:8080**
@@ -84,10 +84,9 @@ L’application peut être conteneurisée avec Docker :
 3. **Vérifier et arrêter**
 
    ```bash
-   docker ps
-   docker logs mixdrink-test
-   docker stop mixdrink-test
-   docker rm mixdrink-test
+   docker-compose ps
+   docker-compose logs
+   docker-compose down
    ```
 
 4. **Scans de sécurité** (optionnel)
